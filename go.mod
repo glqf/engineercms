@@ -1,8 +1,6 @@
 module github.com/3xxx/engineercms
 
-go 1.21
-
-toolchain go1.21.0
+go 1.25.0
 
 require (
 	github.com/3xxx/flow v0.9.0
@@ -16,16 +14,16 @@ require (
 	github.com/casbin/casbin/v2 v2.100.0
 	github.com/disintegration/gift v1.2.1
 	github.com/disintegration/imaging v1.6.2
+<<<<<<< HEAD
 	github.com/dlclark/regexp2 v1.7.0
 	github.com/dsoprea/go-exif/v3 v3.0.1
+=======
+>>>>>>> c285e3a7c2b894e23be656cce457eca3718e48bd
 	github.com/elastic/go-elasticsearch/v8 v8.13.1
 	github.com/go-ldap/ldap/v3 v3.4.8
-	github.com/go-ole/go-ole v1.2.6
-	github.com/go-pay/gopay v1.5.106
 	github.com/go-pay/util v0.0.4
-	github.com/go-pay/xlog v0.0.3
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/golang-jwt/jwt/v4 v4.5.1
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/google/go-tika v0.3.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/holys/initials-avatar v0.0.0-20180809162153-a82edcad3408
@@ -44,11 +42,10 @@ require (
 	github.com/tealeg/xlsx v1.0.5
 	github.com/u2takey/ffmpeg-go v0.5.0
 	github.com/unidoc/unioffice v1.21.1
-	github.com/wechatpay-apiv3/wechatpay-go v0.2.20
 	github.com/xuri/excelize/v2 v2.9.0
-	golang.org/x/crypto v0.28.0
-	golang.org/x/net v0.30.0
-	golang.org/x/text v0.19.0
+	golang.org/x/crypto v0.45.0
+	golang.org/x/net v0.47.0
+	golang.org/x/text v0.35.0
 	google.golang.org/appengine v1.6.7
 	gorm.io/driver/sqlite v1.4.4
 	gorm.io/gorm v1.24.3
@@ -56,7 +53,7 @@ require (
 )
 
 require (
-	github.com/Azure/go-ntlmssp v0.0.0-20221128193559-754e69321358 // indirect
+	github.com/Azure/go-ntlmssp v0.1.1 // indirect
 	github.com/Unknwon/goconfig v1.0.0 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/aws/aws-sdk-go v1.38.20 // indirect
@@ -75,9 +72,6 @@ require (
 	github.com/go-errors/errors v1.4.2 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-pay/crypto v0.0.1 // indirect
-	github.com/go-pay/errgroup v0.0.2 // indirect
-	github.com/go-pay/xtime v0.0.2 // indirect
 	github.com/goccy/go-json v0.8.1 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golang/geo v0.0.0-20210211234256-740aa86cb551 // indirect
@@ -110,7 +104,7 @@ require (
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18 // indirect
-	github.com/sirupsen/logrus v1.9.0 // indirect
+	github.com/sirupsen/logrus v1.9.1 // indirect
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/u2takey/go-utils v0.3.1 // indirect
@@ -119,8 +113,8 @@ require (
 	go.opentelemetry.io/otel v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
-	golang.org/x/image v0.18.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/image v0.38.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.66.6 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
