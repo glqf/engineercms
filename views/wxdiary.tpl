@@ -172,30 +172,30 @@
 <body class="wpcomblog" style="padding-top: 40px; position: relative;">
   <header class="toolbar wpcom-masterbar wpcom-header" id="yeeId_3">
     <div class="wpcom-navigation site-navigation wpcom-nav" role="navigation">
-      <h1 class="wpcom-title"><a class="wpcom-logo" href="https://zsj.itdos.com/"><span>EngineerCMS.com</span></a></h1>
+      <h1 class="wpcom-title"><a class="wpcom-logo" href="https://www.zsj123.net/"><span>EngineerCMS.com</span></a></h1>
       <nav class="wpcom-pages">
         <a class="menu-toggle">Menu</a>
         <ul class="pages-menu">
           <li class="menu-features">
-            <a href="https://zsj.itdos.com/index" title="Features">首页</a>
+            <a href="https://www.zsj123.net/index" title="Features">首页</a>
           </li>
           <li class="menu-themes">
-            <a href="https://zsj.itdos.com/project" title="WordPress Themes for Blogs at WordPress.com">项目</a>
+            <a href="https://www.zsj123.net/project" title="WordPress Themes for Blogs at WordPress.com">项目</a>
           </li>
           <li class="menu-plans">
-            <a href="https://zsj.itdos.com/projectgant" title="Plans">进度</a>
+            <a href="https://www.zsj123.net/projectgant" title="Plans">进度</a>
           </li>
           <li class="menu-news">
-            <a href="https://zsj.itdos.com/article" title="Blog">文章</a>
+            <a href="https://www.zsj123.net/article" title="Blog">文章</a>
           </li>
           <li class="menu-support">
-            <a href="https://zsj.itdos.com/standard" title="Support">规范</a>
+            <a href="https://www.zsj123.net/standard" title="Support">规范</a>
           </li>
           <li class="menu-signup">
-            <a href="https://zsj.itdos.com/register" title="Sign Up">注册</a>
+            <a href="https://www.zsj123.net/register" title="Sign Up">注册</a>
           </li>
           <li class="menu-login">
-            <a href="https://zsj.itdos.com/login" title="Log In" class="login-link">登录</a>
+            <a href="https://www.zsj123.net/login" title="Log In" class="login-link">登录</a>
           </li>
         </ul>
       </nav>
@@ -210,8 +210,8 @@
       </style>
       <div id="blog-header" class="single has-header-img">
         <div class="inner">
-          <h2 id="blog-title"><a href="https://zsj.itdos.com/">The EngineerCMS Blog</a></h2>
-          <p id="blog-tagline"><a href="https://zsj.itdos.com/">The EngineerCMS Blog</a></p>
+          <h2 id="blog-title"><a href="https://www.zsj123.net/">The EngineerCMS Blog</a></h2>
+          <p id="blog-tagline"><a href="https://www.zsj123.net/">The EngineerCMS Blog</a></p>
         </div>
       </div>
       <div id="post-focus" class="has-header-img post-41687 single">

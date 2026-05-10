@@ -1485,12 +1485,12 @@ func (c *StandardController) Upload() {
 // @router /deleteelasticsearch/:id [delete]
 // 全文检索删除，根据id
 func (c *StandardController) DeleteElasticSearch() {
-	//
-	// client, err := newClient()
-	// if err != nil {
-	//    panic(err)
-	// }
-
+	_, _, _, isadmin, _ := checkprodRole(c.Ctx)
+	if !isadmin {
+		c.Data["json"] = "非管理员"
+		c.ServeJSON()
+		return
+	}
 	id := c.Ctx.Input.Param(":id")
 	//pid转成64为
 	// idNum, err := strconv.ParseInt(id, 10, 64)
@@ -1519,8 +1519,14 @@ func (c *StandardController) DeleteElasticSearch() {
 // @router /deleteelasticall [delete]
 // 全文检索删除，根据id
 func (c *StandardController) DeleteElasticAll() {
+	_, _, _, isadmin, _ := checkprodRole(c.Ctx)
+	if !isadmin {
+		c.Data["json"] = "非管理员"
+		c.ServeJSON()
+		return
+	}
 	deleteDoc := es.Delete
-	for i := 1; i <= 1404; i++ {
+	for i := 1; i <= 3000; i++ {
 		_, err := deleteDoc(indexName, strconv.Itoa(i), deleteDoc.WithPretty())
 		if err != nil {
 			logs.Error(err)
@@ -1533,6 +1539,39 @@ func (c *StandardController) DeleteElasticAll() {
 	c.Data["json"] = map[string]interface{}{"info": "SUCCESS", "data": "删除全文检索elastic成功！"}
 	c.ServeJSON()
 }
+
+// 查询所有
+// SearchAllDocument 搜索指定索引下所有文档
+// func SearchAllDocument(indexName string) {
+// 	// 创建客户端连接
+// 	client, err := elasticsearch.NewTypedClient(cfg)
+// 	if err != nil {
+// 		fmt.Printf("elasticsearch.NewTypedClient failed, err:%v\n", err)
+// 		panic(err)
+// 	}
+// 	EsClinet = client
+// ————————————————
+// 版权声明：本文为CSDN博主「百里守约学编程」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+// 原文链接：https://blog.csdn.net/YouMing_Li/article/details/135032922
+// 	// 搜索文档
+// 	resp, err := EsClinet.Search().
+// 		Index(indexName).
+// 		Request(&search.Request{
+// 			Query: &types.Query{
+// 				MatchAll: &types.MatchAllQuery{},
+// 			},
+// 		}).
+// 		Do(context.Background())
+// 	if err != nil {
+// 		fmt.Printf("search document failed, err:%v\n", err)
+// 		return
+// 	}
+// 	fmt.Printf("total: %d\n", resp.Hits.Total.Value)
+// 	// 遍历所有结果
+// 	for _, hit := range resp.Hits.Hits {
+// 		fmt.Printf("%s\n", hit.Source_)
+// 	}
+// }
 
 // 全文检索更新
 // *******全文检索结束**********

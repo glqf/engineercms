@@ -113,24 +113,27 @@ func SaveUser(user User) (uid int64, err error) {
 func AddUserOpenID(userid int64, openid string) (id int64, err error) {
 	o := orm.NewOrm()
 	var useropenid UserOpenID
-	useropenid.Uid = userid
-	useropenid.OpenID = openid
 	//判断是否有重名
-	err = o.QueryTable("UserOpenID").Filter("open_i_d", openid).One(&useropenid, "Id")
+	err = o.QueryTable("UserOpenID").Filter("open_i_d", openid).One(&useropenid)
 	if err == orm.ErrNoRows { //Filter("tnumber", tnumber).One(topic, "Id")==nil则无法建立
 		// 没有找到记录
+		useropenid.Uid = userid
+		useropenid.OpenID = openid
 		id, err = o.Insert(&useropenid)
 		if err != nil {
-			return id, err
+			return 0, err
 		}
+		return id, nil
 	} else {
+		useropenid.Uid = userid // 这里要加上，否则从上面是查询出来的&useropenid里的uid是0，永远更新不了！！！！
 		// 20250420如果openid存在，进行更新openid对应用户名。所以openid永远对应最新登录的用户名。
-		_, err = o.Update(&useropenid, "Uid")
+		_, err = o.Update(&useropenid, "Uid") // 为什么更新成了id为0？？？
 		if err != nil {
-			return useropenid.Uid, err
+			return 0, err
 		}
+		return userid, nil
 	}
-	return useropenid.Uid, err //这里需要改改，否则，即使已经存在，则err为空。id=0则已经存在
+	// return useropenid.Uid, err //这里需要改改，否则，即使已经存在，则err为空。id=0则已经存在
 }
 
 // 取出所有openid

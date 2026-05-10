@@ -81,7 +81,7 @@
           3. 如果涉及侵权，请联系我清理；如果遇到文件不清晰或未识别，请联系我处理；技术栈：elasticsearch+ik+tika全文检索,pdf.js分片下载
         </p>
         <p align="left" class="large">
-          4. 海量PDF文件自动识别、优化大小处理：<a href="https://zsj.itdos.net/docs/pdf" title="海量pdf处理教程">海量pdf处理教程</a>
+          4. 海量PDF文件自动识别、优化大小处理：<a href="https://www.zsj123.net/docs/pdf" title="海量pdf处理教程">海量pdf处理教程</a>
         </p>
     </div>
 
@@ -214,7 +214,7 @@
               </div> -->
               <div class="form-group must">
                 <label class="col-sm-4 control-label">3. 识别和优化PDF文件：</label>
-                <label class="col-sm-8">因为是全文检索规范，所以pdf必须是文字识别OCR后再另存为“优化后的pdf”——再用“文档处理——优化扫描的pdf”。<a href="https://zsj.itdos.net/docs/pdf" title="海量pdf处理教程">海量pdf处理教程</a></label>
+                <label class="col-sm-8">因为是全文检索规范，所以pdf必须是文字识别OCR后再另存为“优化后的pdf”——再用“文档处理——优化扫描的pdf”。<a href="https://www.zsj123.net/docs/pdf" title="海量pdf处理教程">海量pdf处理教程</a></label>
               </div>
             </div>
           </div>

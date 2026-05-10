@@ -2565,15 +2565,6 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"],
         beego.ControllerComments{
-            Method: "Mapus",
-            Router: `/mapus`,
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
-    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"],
-        beego.ControllerComments{
             Method: "Postdata",
             Router: `/postdata`,
             AllowHTTPMethods: []string{"post"},
@@ -2592,6 +2583,114 @@ func init() {
 
     beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"],
         beego.ControllerComments{
+            Method: "UserManage",
+            Router: `/usermanage`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"],
+        beego.ControllerComments{
+            Method: "Update",
+            Router: `/mapelements/:id`,
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"],
+        beego.ControllerComments{
+            Method: "Delete",
+            Router: `/mapelements/:id`,
+            AllowHTTPMethods: []string{"delete"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"],
+        beego.ControllerComments{
+            Method: "Create",
+            Router: `/mapprojects/:id/elements`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapElementController"],
+        beego.ControllerComments{
+            Method: "List",
+            Router: `/mapprojects/:id/elements`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "GoMapus",
+            Router: `/:id`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "Update",
+            Router: `/mapprojects/:id`,
+            AllowHTTPMethods: []string{"put"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "Get",
+            Router: `/mapprojects/:id`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "AddMember",
+            Router: `/mapprojects/:id/members`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "ListMembers",
+            Router: `/mapprojects/:id/members`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "Create",
+            Router: `/mapprojects/create`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
+            Method: "List",
+            Router: `/mapprojects/list`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
+        beego.ControllerComments{
             Method: "Terrain",
             Router: `/terrain`,
             AllowHTTPMethods: []string{"get"},
@@ -2599,10 +2698,19 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MainController"],
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapProjectController"],
         beego.ControllerComments{
-            Method: "UserManage",
-            Router: `/usermanage`,
+            Method: "Search",
+            Router: `/tianditusearch`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapWebSocketController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:MapWebSocketController"],
+        beego.ControllerComments{
+            Method: "WsConnect",
+            Router: `/wsconnect`,
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -3706,15 +3814,6 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:SupaMapusController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:SupaMapusController"],
-        beego.ControllerComments{
-            Method: "Search",
-            Router: `/tianditusearch`,
-            AllowHTTPMethods: []string{"get"},
-            MethodParams: param.Make(),
-            Filters: nil,
-            Params: nil})
-
     beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:TodoController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:TodoController"],
         beego.ControllerComments{
             Method: "Create",
@@ -3747,6 +3846,51 @@ func init() {
             Method: "UpdateTodo",
             Router: `/updatetodo`,
             AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"],
+        beego.ControllerComments{
+            Method: "ListGPSFilesHandler",
+            Router: `/files/:id/gps`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"],
+        beego.ControllerComments{
+            Method: "ListFilesHandler",
+            Router: `/listfiles/:id`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"],
+        beego.ControllerComments{
+            Method: "GetStatsHandler",
+            Router: `/stats`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"],
+        beego.ControllerComments{
+            Method: "UploadHandler",
+            Router: `/upload/:id`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"] = append(beego.GlobalControllerRouter["github.com/3xxx/engineercms/controllers:UploadFilesController"],
+        beego.ControllerComments{
+            Method: "UploadFiles",
+            Router: `/uploadfiles/:id`,
+            AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
             Params: nil})

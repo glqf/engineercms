@@ -81,19 +81,19 @@ func CreateShare(share *Share) (*Share, error) {
 	// this.PanicError(db.Error)
 	// o := orm.NewOrm()
 	// id, err = o.Insert(share)
-	db := _db //GetDB()
+	db := DB //GetDB()
 	db = db.Table("share_share").Create(&share)
 
 	return share, db.Error
 }
 
-//find by uuid. if not found return nil.
+// find by uuid. if not found return nil.
 func FindByUuidShare(uuid string) (*Share, error) {
 	// db := GetDB()
 	// err = db.Where("user_id = ?", uid).First(&money).Error
 	// return money, err
 	var entity = &Share{}
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// db := core.CONTEXT.GetDB().Where("uuid = ?", uuid).First(entity)
 	db = db.Table("share_share").Where("uuid = ?", uuid).First(entity)
 	// db.Where("name = ?", "jinzhu").First(&user)
@@ -107,7 +107,7 @@ func FindByUuidShare(uuid string) (*Share, error) {
 	return entity, db.Error
 }
 
-//find by uuid. if not found panic NotFound error
+// find by uuid. if not found panic NotFound error
 func CheckByUuidShare(uuid string) (*Share, error) {
 	entity, err := FindByUuidShare(uuid)
 	// if entity == nil {
@@ -182,7 +182,7 @@ func FindByUuids(uuids []int64) ([]*Product, error) {
 	// }
 	// return str
 	// GetDB()
-	db := _db.Where(uuids).Find(&products)
+	db := DB.Where(uuids).Find(&products)
 	// this.PanicError(db.Error)
 	return products, db.Error
 }

@@ -132,7 +132,7 @@
                     </ul>
                   </li>
                   <li id="menu-item-4141" class="menu-item   menu-item-4141">
-                    <span class="menu-item-wrapper"><a href="https://zsj.itdos.net/docs/pss">HELP</a></span></li>
+                    <span class="menu-item-wrapper"><a href="https://www.zsj123.net/docs/pss">HELP</a></span></li>
                 </ul>
               </div>
             </nav>

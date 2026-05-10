@@ -170,6 +170,6 @@
 	3. 浏览器进入minio管理截面，新建bucket，设置新建的bucket的密钥，设置bucket的访问策略，例如设置为public
 	4. 设置engineercms的app.conf里minio有关参数：IP和端口，密钥，SSL之类
 	5. 运行engineercms，上传文件
-  详细操作文档见https://zsj.itdos.net/docs/engineercms_008
+  详细操作文档见https://www.zsj123.net/docs/engineercms_008
 
 

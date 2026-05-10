@@ -21,7 +21,7 @@ func init() {
 	// orm.RegisterDataBase("default", "sqlite3", "database/engineer.db", 10)
 }
 
-//添加文章作为成果的附件
+// 添加文章作为成果的附件
 func AddArticle(subtext, content string, productid int64) (id int64, err error) {
 	o := orm.NewOrm()
 	Article := &Article{
@@ -38,7 +38,7 @@ func AddArticle(subtext, content string, productid int64) (id int64, err error) 
 	return id, nil
 }
 
-//修改
+// 修改
 func UpdateArticle(id int64, subtext, content string) error {
 	o := orm.NewOrm()
 	article := &Article{Id: id}
@@ -54,7 +54,7 @@ func UpdateArticle(id int64, subtext, content string) error {
 	return nil
 }
 
-//删除
+// 删除
 func DeleteArticle(id int64) error {
 	o := orm.NewOrm()
 	article := &Article{Id: id}
@@ -67,17 +67,19 @@ func DeleteArticle(id int64) error {
 	return nil
 }
 
-//取得所有项目
-// func GetArticles() (Artic []*Article, err error) {
-// 	o := orm.NewOrm()
-// 	qs := o.QueryTable("Article") //这个表名AchievementTopic需要用驼峰式，
-// 	_, err = qs.Filter("parentid", 0).All(&Artic)
-// 	if err != nil {
-// 		return Artic, err
-// 	}
-// 	return Artic, err
-// }
-//根据成果id取得所有文章——只返回id和prodid，因为返回content太慢了，没必要吧20171007
+// 取得所有项目
+//
+//	func GetArticles() (Artic []*Article, err error) {
+//		o := orm.NewOrm()
+//		qs := o.QueryTable("Article") //这个表名AchievementTopic需要用驼峰式，
+//		_, err = qs.Filter("parentid", 0).All(&Artic)
+//		if err != nil {
+//			return Artic, err
+//		}
+//		return Artic, err
+//	}
+//
+// 根据成果id取得所有文章——只返回id和prodid，因为返回content太慢了，没必要吧20171007
 func GetArticles(pid int64) (Articles []*Article, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("Article")
@@ -88,7 +90,7 @@ func GetArticles(pid int64) (Articles []*Article, err error) {
 	return Articles, err
 }
 
-//微信小程序，根据成果id取得所有文章——返回id和prodid，content……
+// 微信小程序，根据成果id取得所有文章——返回id和prodid，content……
 func GetWxArticles(pid int64) (Articles []*Article, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("Article")
@@ -99,7 +101,7 @@ func GetWxArticles(pid int64) (Articles []*Article, err error) {
 	return Articles, err
 }
 
-//根据文章id取得文章
+// 根据文章id取得文章
 func GetArticle(id int64) (Artic *Article, err error) {
 	o := orm.NewOrm()
 	article := new(Article)
@@ -118,7 +120,7 @@ func GetArticle(id int64) (Artic *Article, err error) {
 	return article, err
 }
 
-//取出用户文章数目
+// 取出用户文章数目
 type Result struct {
 	Usernickname string `json:"name"`
 	Productid    int64
@@ -132,7 +134,7 @@ func GetWxUserArticles(pid int64) (results []*Result, err error) {
 	// 	Joins("left JOIN product on product.id = article.product_id").
 	// 	Joins("left JOIN user on user.id = product.uid").
 	// 	Scan(&results)
-	err = _db.Order("total desc").Table("article").Select("product_id as productid, count(*) as total,user.nickname as usernickname").
+	err = DB.Order("total desc").Table("article").Select("product_id as productid, count(*) as total,user.nickname as usernickname").
 		Joins("left JOIN product on product.id = article.product_id").
 		Joins("left JOIN user on user.id = product.uid").Group("product.uid").
 		Joins("left JOIN project on project.id = product.project_id").Where("project.id=?", pid).
@@ -155,7 +157,7 @@ func GetWxUserArticles(pid int64) (results []*Result, err error) {
 // Select("product_id as product_id,article.id as id,article.subtext as subtext,article.content as content,article.created as created").
 // 不加上面这句，就会导致Id一直是projectid，因为是join，所以id会冲突，以最后查询出的id当做ariticle这个结构体的id了。
 func SearchArticles(pid int64, limit, offset int, key string, isDesc bool) (articles []*Article, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Order("created desc").Table("article").
 		Select("product_id as product_id,article.id as id,article.subtext as subtext,article.content as content,article.created as created").
 		Joins("left JOIN product on product.id = article.product_id").

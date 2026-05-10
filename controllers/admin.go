@@ -1714,6 +1714,15 @@ func (c *AdminController) Testdown() {
 	http.ServeFile(c.Ctx.ResponseWriter, c.Ctx.Request, "static/download/"+filename)
 }
 
+func (c *AdminController) Weixin() {
+	filePath, err := url.QueryUnescape(c.Ctx.Request.RequestURI[1:]) //  attachment/SL2016测试添加成果/A/FB/1/Your First Meteor Application.pdf
+	if err != nil {
+		logs.Error(err)
+	}
+	filename := path.Base(filePath)
+	http.ServeFile(c.Ctx.ResponseWriter, c.Ctx.Request, "static/download/"+filename)
+}
+
 // @Title get wx projectconfig by projectid
 // @Description get wx projectconfig by projectid
 // @Param projectid query string true "The id of project"

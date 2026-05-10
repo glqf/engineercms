@@ -7,7 +7,7 @@ import (
 )
 
 //const (
-//	_DB_NAME        = "database/orm_test.db"
+//	DB_NAME        = "database/orm_test.db"
 //	_SQLITE3_DRIVER = "sqlite3"
 //)
 
@@ -222,7 +222,7 @@ type UserStandard struct {
 
 // 查询某个用户借阅记录
 func GetUserStandard(limit, offset int, searchText string) (ustds []UserStandard, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if searchText != "" {
 		err = db.Order("standard.updated desc").Table("standard").
 			Select("standard.id,standard.number,standard.title,standard.category,standard.route,user.nickname as user_name").
@@ -243,7 +243,7 @@ func GetUserStandard(limit, offset int, searchText string) (ustds []UserStandard
 // 查询规范记录总数
 func GetUserStandardCount(searchText string) (count int64, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if searchText != "" {
 		err = db.Table("standard").
 			Where("title LIKE ? OR number LIKE ?", "%"+searchText+"%", "%"+searchText+"%").
@@ -274,7 +274,7 @@ func GetUserStandardCount(searchText string) (count int64, err error) {
 // db.Where("name <> ?", "jinzhu").Find(&users)
 // "name LIKE ?", "%jin%"
 func SearchLibraryNumber(Category, Number string) (library *Library, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Order("library.updated desc").
 		Where("category LIKE ?", "%"+Category+"%").Where("number = ?", Number).
 		First(&library).Error

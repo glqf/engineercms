@@ -117,7 +117,10 @@ a.navbar-brand {
         <a href="/v1/freecad/modellist" title="FreeCAD" target="_blank">FreeCAD</a>
       </li>
       <li {{if .IsMapus}} class="active" {{end}}>
-        <a href="/mapus" title="Mapus" target="_blank">地图协作</a>
+        <a href="/v1/gomapus/1" title="Mapus" target="_blank">地图协作</a>
+      </li>
+      <li {{if .IsMapus}} class="active" {{end}}>
+        <a href="/v1/wx/terrain" title="地形图下载" target="_blank">地形图</a>
       </li>
       <li {{if .IsEstimate}} class="active" {{end}}>
         <a href="/v1/estimate/getestimateprojects" title="Estimate" target="_blank">概预算</a>

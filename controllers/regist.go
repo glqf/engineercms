@@ -184,9 +184,10 @@ func (c *RegistController) WxRegist() {
 			c.ServeJSON()
 		} else {
 			openID = data["openid"].(string)
-			// beego.Info(openID)
+			logs.Info(openID)
 			//将openid写入数据库
 			user, err = models.GetUserByUsername(user.Username)
+			logs.Info(user)
 			if err != nil {
 				logs.Error(err)
 				c.Data["json"] = map[string]interface{}{"errNo": err, "msg": "", "data": "未查询到用户名存在！"}
@@ -194,10 +195,12 @@ func (c *RegistController) WxRegist() {
 			} else {
 				uid = strconv.FormatInt(user.Id, 10)
 			}
-			_, err = models.AddUserOpenID(user.Id, openID) // 20240728防止用id为0存入了数据库中;20250420如果openid存在，则更新openid对应的用户名
+			logs.Info(user.Id)
+			idtemp, err := models.AddUserOpenID(user.Id, openID) // 20240728防止用id为0存入了数据库中;20250420如果openid存在，则更新openid对应的用户名
 			if err != nil {
 				logs.Error(err)
 			}
+			logs.Info(idtemp)
 			//根据userid取出user和avatorUrl
 			useravatar, err := models.GetUserAvatorUrl(user.Id)
 			if err != nil {

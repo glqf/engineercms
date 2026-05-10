@@ -5275,6 +5275,443 @@ paths:
           description: Invalid page supplied
         "404":
           description: data not found
+  /gomapus/{id}:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        get mapus web
+        <br>
+      operationId: MapProjectController.get mapus web
+      parameters:
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GetMapus'
+        "400":
+          description: Invalid page supplied
+        "404":
+          description: location not found
+  /gomapus/files/{id}/gps:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        获取包含GPS信息的文件列表
+        <br>
+      operationId: UploadFilesController.ListGPSFilesHandler
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+  /gomapus/listfiles/{id}:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        上传照片列表
+        <br>
+      operationId: UploadFilesController.ListFilesHandler
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=[]ProjectResponse}'
+  /gomapus/mapelements/{id}:
+    put:
+      tags:
+      - gomapus
+      description: |-
+        更新地图元素
+        <br>
+      operationId: MapElementController.Update
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 地图元素ID
+        required: true
+        type: integer
+        format: int64
+      - in: body
+        name: body
+        description: 地图元素信息
+        required: true
+        schema:
+          $ref: '#/definitions/CreateMapElementRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=MapElementResponse}'
+    delete:
+      tags:
+      - gomapus
+      description: |-
+        删除地图元素
+        <br>
+      operationId: MapElementController.Delete
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 地图元素ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response'
+  /gomapus/mapprojects/{id}:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        获取项目详情
+        <br>
+      operationId: MapProjectController.Get
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+    put:
+      tags:
+      - gomapus
+      description: |-
+        更新项目信息
+        <br>
+      operationId: MapProjectController.Update
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 项目信息
+        required: true
+        schema:
+          $ref: '#/definitions/CreateProjectRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+  /gomapus/mapprojects/{id}/elements:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        获取项目地图元素列表
+        <br>
+      operationId: MapElementController.List
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: query
+        name: project_id
+        description: "true"
+        type: integer
+        format: int64
+    post:
+      tags:
+      - gomapus
+      description: |-
+        创建地图元素
+        <br>
+      operationId: MapElementController.Create
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 地图元素信息
+        required: true
+        schema:
+          $ref: '#/definitions/CreateMapElementRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=MapElementResponse}'
+  /gomapus/mapprojects/{id}/members:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        列表项目成员
+        <br>
+      operationId: MapProjectController.ListMembers
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+    post:
+      tags:
+      - gomapus
+      description: |-
+        添加项目成员
+        <br>
+      operationId: MapProjectController.AddMember
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 项目信息
+        required: true
+        schema:
+          $ref: '#/definitions/CreateProjectRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+  /gomapus/mapprojects/create:
+    post:
+      tags:
+      - gomapus
+      description: |-
+        创建新项目
+        <br>
+      operationId: MapProjectController.Create
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: 项目信息
+        required: true
+        schema:
+          $ref: '#/definitions/CreateProjectRequest'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+  /gomapus/mapprojects/list:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        获取当前用户的项目列表
+        <br>
+      operationId: MapProjectController.List
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=[]ProjectResponse}'
+  /gomapus/stats:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        获取文件统计信息
+        <br>
+      operationId: UploadFilesController.GetStatsHandler
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=ProjectResponse}'
+  /gomapus/terrain:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        get terrain web
+        <br>
+      operationId: MapProjectController.get terrain web
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GetMapus'
+        "400":
+          description: Invalid page supplied
+        "404":
+          description: location not found
+  /gomapus/tianditusearch:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        get tianditu location
+        <br>
+      operationId: MapProjectController.get tianditu location
+      parameters:
+      - in: query
+        name: keyword
+        description: The keyword of location
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.GetAttachbyId'
+        "400":
+          description: Invalid page supplied
+        "404":
+          description: location not found
+  /gomapus/upload/{id}:
+    post:
+      tags:
+      - gomapus
+      description: |-
+        上传照片处理
+        <br>
+      operationId: UploadFilesController.UploadHandler
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=[]ProjectResponse}'
+  /gomapus/uploadfiles/{id}:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        上传照片页面
+        <br>
+      operationId: UploadFilesController.UploadFiles
+      parameters:
+      - in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+        type: string
+      - in: path
+        name: id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/Response{data=[]ProjectResponse}'
+  /gomapus/wsconnect:
+    get:
+      tags:
+      - gomapus
+      description: |-
+        建立WebSocket连接
+        <br>
+      operationId: MapWebSocketController.Connect
+      parameters:
+      - in: query
+        name: token
+        description: 认证令牌
+        required: true
+        type: string
+      - in: query
+        name: project_id
+        description: 项目ID
+        required: true
+        type: integer
+        format: int64
   /math/addarticle/{id}:
     post:
       tags:
@@ -10141,23 +10578,6 @@ paths:
           description: Invalid page supplied
         "404":
           description: data not found
-  /wx/mapus:
-    get:
-      tags:
-      - wx
-      description: |-
-        get mapus web
-        <br>
-      operationId: MainController.get mapus web
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.GetMapus'
-        "400":
-          description: Invalid page supplied
-        "404":
-          description: location not found
   /wx/mathpdf/{id}:
     get:
       tags:
@@ -10844,46 +11264,6 @@ paths:
           description: Invalid page supplied
         "404":
           description: cart not found
-  /wx/terrain:
-    get:
-      tags:
-      - wx
-      description: |-
-        get terrain web
-        <br>
-      operationId: MainController.get terrain web
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.GetMapus'
-        "400":
-          description: Invalid page supplied
-        "404":
-          description: location not found
-  /wx/tianditusearch:
-    get:
-      tags:
-      - wx
-      description: |-
-        get tianditu location
-        <br>
-      operationId: SupaMapusController.get tianditu location
-      parameters:
-      - in: query
-        name: keyword
-        description: The keyword of location
-        required: true
-        type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.GetAttachbyId'
-        "400":
-          description: Invalid page supplied
-        "404":
-          description: location not found
   /wx/updatebusiness/{id}:
     post:
       tags:
@@ -12031,11 +12411,29 @@ paths:
         "404":
           description: pdf not found
 definitions:
+  CreateMapElementRequest:
+    title: CreateMapElementRequest
+    type: object
+  CreateProjectRequest:
+    title: CreateProjectRequest
+    type: object
   FileNode1:
     title: FileNode1
     type: object
   FreeCAD:
     title: FreeCAD
+    type: object
+  Response:
+    title: Response
+    type: object
+  Response{data=[]ProjectResponse}:
+    title: Response{data=[]ProjectResponse}
+    type: object
+  Response{data=MapElementResponse}:
+    title: Response{data=MapElementResponse}
+    type: object
+  Response{data=ProjectResponse}:
+    title: Response{data=ProjectResponse}
     type: object
   SUCCESS:
     title: SUCCESS
@@ -13314,6 +13712,9 @@ tags:
 - name: wx
   description: |
     微信扫码
+- name: gomapus
+  description: |
+    WebSocketController 处理WebSocket连接
 - name: adminlog
   description: |
     CMSADMIN API

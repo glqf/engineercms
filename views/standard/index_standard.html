@@ -150,7 +150,7 @@
   <div v-bind:class="{loading:state.loading}" id="app" v-cloak>
     <div class="admin-panel">
       <button v-on:click="toggleAdminMode" class="admin-toggle" v-text="isAdmin ? '退出管理员模式' : '进入管理员模式'"></button>
-      <button v-on:click="deleteElasticAll" class="admin-toggle" v-text="isAdmin ? '删除所有' : ''"></button>
+      <button v-on:click="deleteElasticAll" class="admin-toggle" v-show="isAdmin">删除所有</button>
     </div>
     
     <!-- 管理员登录对话框 -->

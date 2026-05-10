@@ -377,29 +377,30 @@ func (c *OnlyController) GetData() {
 
 			docxarr[0].Id = v.Id
 			docxarr[0].Title = v.FileName
-			if path.Ext(v.FileName) == ".docx" || path.Ext(v.FileName) == ".DOCX" || path.Ext(v.FileName) == ".doc" || path.Ext(v.FileName) == ".DOC" {
+			ext := strings.ToLower(filepath.Ext(v.FileName))
+			if ext == ".docx" || ext == ".doc" {
 				docxarr[0].Suffix = "docx"
-			} else if path.Ext(v.FileName) == ".wps" || path.Ext(v.FileName) == ".WPS" {
+			} else if ext == ".wps" {
 				docxarr[0].Suffix = "docx"
-			} else if path.Ext(v.FileName) == ".XLSX" || path.Ext(v.FileName) == ".xlsx" || path.Ext(v.FileName) == ".XLS" || path.Ext(v.FileName) == ".xls" {
+			} else if ext == ".xlsx" || ext == ".xls" {
 				docxarr[0].Suffix = "xlsx"
 				// xlsxarr := make([]XlsxLink, 1)
 				// xlsxarr[0].Id = v.Id
 				// xlsxarr[0].Title = v.FileName
 				// Xlsxslice = append(Xlsxslice, xlsxarr...)
-			} else if path.Ext(v.FileName) == ".ET" || path.Ext(v.FileName) == ".et" {
+			} else if ext == ".et" {
 				docxarr[0].Suffix = "xlsx"
-			} else if path.Ext(v.FileName) == ".pptx" || path.Ext(v.FileName) == ".PPTX" || path.Ext(v.FileName) == ".ppt" || path.Ext(v.FileName) == ".PPT" {
+			} else if ext == ".pptx" || ext == ".ppt" {
 				docxarr[0].Suffix = "pptx"
 				// pptxarr := make([]PptxLink, 1)
 				// pptxarr[0].Id = v.Id
 				// pptxarr[0].Title = v.FileName
 				// Pptxslice = append(Pptxslice, pptxarr...)
-			} else if path.Ext(v.FileName) == ".DPS" || path.Ext(v.FileName) == ".dps" {
+			} else if ext == ".dps" {
 				docxarr[0].Suffix = "pptx"
-			} else if path.Ext(v.FileName) == ".pdf" || path.Ext(v.FileName) == ".PDF" {
+			} else if ext == ".pdf" {
 				docxarr[0].Suffix = "pdf"
-			} else if path.Ext(v.FileName) == ".txt" || path.Ext(v.FileName) == ".TXT" {
+			} else if ext == ".txt" {
 				docxarr[0].Suffix = "txt"
 			}
 			Docxslice = append(Docxslice, docxarr...)
@@ -676,41 +677,41 @@ func (c *OnlyController) OnlyOffice() {
 	// .htm, .html, .hwp, .hwpx, .key, .mht, .numbers, .odp, .ods, .odt, .oform, .otp, .ots, .ott, .oxps, .pages,
 	// .pdf, .pot, .potm, .potx, .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf, .txt, .xls, .xlsb, .xlsm, .xlsx, .xlt,
 	// .xltm, .xltx, .xml, .xps.
-
-	if path.Ext(onlyattachment.FileName) == ".docx" || path.Ext(onlyattachment.FileName) == ".DOCX" {
+	ext := strings.ToLower(filepath.Ext(onlyattachment.FileName))
+	if ext == ".docx" {
 		c.Data["fileType"] = "docx"
 		c.Data["documentType"] = "word" //word
-	} else if path.Ext(onlyattachment.FileName) == ".wps" || path.Ext(onlyattachment.FileName) == ".WPS" {
+	} else if ext == ".wps" {
 		c.Data["fileType"] = "docx"
 		c.Data["documentType"] = "word"
-	} else if path.Ext(onlyattachment.FileName) == ".XLSX" || path.Ext(onlyattachment.FileName) == ".xlsx" {
+	} else if ext == ".xlsx" {
 		c.Data["fileType"] = "xlsx"
 		c.Data["documentType"] = "cell" //cell
-	} else if path.Ext(onlyattachment.FileName) == ".ET" || path.Ext(onlyattachment.FileName) == ".et" {
+	} else if ext == ".et" {
 		c.Data["fileType"] = "xlsx"
 		c.Data["documentType"] = "cell"
-	} else if path.Ext(onlyattachment.FileName) == ".pptx" || path.Ext(onlyattachment.FileName) == ".PPTX" {
+	} else if ext == ".pptx" {
 		c.Data["fileType"] = "pptx"
 		c.Data["documentType"] = "slide" //slide
-	} else if path.Ext(onlyattachment.FileName) == ".dps" || path.Ext(onlyattachment.FileName) == ".DPS" {
+	} else if ext == ".dps" {
 		c.Data["fileType"] = "pptx"
 		c.Data["documentType"] = "slide"
-	} else if path.Ext(onlyattachment.FileName) == ".doc" || path.Ext(onlyattachment.FileName) == ".DOC" {
+	} else if ext == ".doc" {
 		c.Data["fileType"] = "doc"
 		c.Data["documentType"] = "word"
-	} else if path.Ext(onlyattachment.FileName) == ".txt" || path.Ext(onlyattachment.FileName) == ".TXT" {
+	} else if ext == ".txt" {
 		c.Data["fileType"] = "txt"
 		c.Data["documentType"] = "word" //word
-	} else if path.Ext(onlyattachment.FileName) == ".XLS" || path.Ext(onlyattachment.FileName) == ".xls" {
+	} else if ext == ".XLS" {
 		c.Data["fileType"] = "xls"
 		c.Data["documentType"] = "cell"
-	} else if path.Ext(onlyattachment.FileName) == ".csv" || path.Ext(onlyattachment.FileName) == ".CSV" {
+	} else if ext == ".csv" {
 		c.Data["fileType"] = "csv"
 		c.Data["documentType"] = "cell"
-	} else if path.Ext(onlyattachment.FileName) == ".ppt" || path.Ext(onlyattachment.FileName) == ".PPT" {
+	} else if ext == ".ppt" {
 		c.Data["fileType"] = "ppt"
 		c.Data["documentType"] = "slide"
-	} else if path.Ext(onlyattachment.FileName) == ".pdf" || path.Ext(onlyattachment.FileName) == ".PDF" {
+	} else if ext == ".pdf" {
 		c.Data["fileType"] = "pdf"
 		c.Data["documentType"] = "pdf" //word
 		c.Data["Mode"] = "view"

@@ -17,6 +17,7 @@ require (
 	github.com/disintegration/gift v1.2.1
 	github.com/disintegration/imaging v1.6.2
 	github.com/dlclark/regexp2 v1.7.0
+	github.com/dsoprea/go-exif/v3 v3.0.1
 	github.com/elastic/go-elasticsearch/v8 v8.13.1
 	github.com/go-ldap/ldap/v3 v3.4.8
 	github.com/go-ole/go-ole v1.2.6
@@ -66,9 +67,12 @@ require (
 	github.com/casbin/govaluate v1.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dchest/lru v0.0.0-20151022103600-d8fd1e40a385 // indirect
+	github.com/dsoprea/go-logging v0.0.0-20200710184922-b02d349568dd // indirect
+	github.com/dsoprea/go-utility/v2 v2.0.0-20221003172846-a3e1774ef349 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/elastic/elastic-transport-go/v8 v8.6.0 // indirect
 	github.com/go-asn1-ber/asn1-ber v1.5.5 // indirect
+	github.com/go-errors/errors v1.4.2 // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-pay/crypto v0.0.1 // indirect
@@ -76,6 +80,7 @@ require (
 	github.com/go-pay/xtime v0.0.2 // indirect
 	github.com/goccy/go-json v0.8.1 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang/geo v0.0.0-20210211234256-740aa86cb551 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect

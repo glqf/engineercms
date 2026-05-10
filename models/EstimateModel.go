@@ -120,12 +120,12 @@ type EstimateCostTemp struct {
 // &EstimatePhase{},
 
 func init() {
-	// _db.AutoMigrate(&EstimateProject{}, &EstimateProjPhase{}, &EstimateProfessional{}, &EstimateSecondary{}, &EstimateTertiary{}, &EstimateCost{})
+	// DB.AutoMigrate(&EstimateProject{}, &EstimateProjPhase{}, &EstimateProfessional{}, &EstimateSecondary{}, &EstimateTertiary{}, &EstimateCost{})
 }
 
 // 项目信息写入数据库
 func AddEstimateProject(number, name, profile, grade string, period int, userid int64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	// var businesscheckin BusinessCheckin
 	estimateproject := &EstimateProject{
@@ -147,7 +147,7 @@ func AddEstimateProject(number, name, profile, grade string, period int, userid 
 // 修改项目信息
 func UpdateEstProject(projectid uint, fieldname, value string) (err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 条件更新
 	// var new_value bool
 	// switch value {
@@ -163,7 +163,7 @@ func UpdateEstProject(projectid uint, fieldname, value string) (err error) {
 
 // 项目阶段特性写入数据库
 func AddEstimatePhase(projectid uint, phasename, information string, totalinvestment, staticinvestment float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	// var businesscheckin BusinessCheckin
 	estimatephase := &EstimateProjPhase{
@@ -183,7 +183,7 @@ func AddEstimatePhase(projectid uint, phasename, information string, totalinvest
 
 // cost写入数据库——建筑工程
 func AddEstimateCostArchi(estimateProjPhaseID, parentID uint, number, costname, unit string, quantity, unitprice, total float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	var estimatecost *EstimateCostArchi
 	if estimateProjPhaseID == 0 && quantity == 0 && unitprice == 0 { // 2345级
@@ -223,7 +223,7 @@ func AddEstimateCostArchi(estimateProjPhaseID, parentID uint, number, costname, 
 
 // cost写入数据库——机电设备安装工程
 func AddEstimateCostElect(estimateProjPhaseID, parentID uint, number, costname, unit string, quantity, unitpriceEquipment, unitpriceInstallation, totalEquipment, totalInstallation float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	var estimatecost *EstimateCostElect
 	if estimateProjPhaseID == 0 && quantity == 0 && unitpriceEquipment == 0 { // 2345级
@@ -267,7 +267,7 @@ func AddEstimateCostElect(estimateProjPhaseID, parentID uint, number, costname, 
 
 // cost写入数据库——金属结构安装工程
 func AddEstimateCostMetal(estimateProjPhaseID, parentID uint, number, costname, unit string, quantity, unitpriceEquipment, unitpriceInstallation, totalEquipment, totalInstallation float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	var estimatecost *EstimateCostMetal
 	if estimateProjPhaseID == 0 && quantity == 0 && unitpriceEquipment == 0 { // 2345级
@@ -311,7 +311,7 @@ func AddEstimateCostMetal(estimateProjPhaseID, parentID uint, number, costname, 
 
 // cost写入数据库——临时工程
 func AddEstimateCostTemp(estimateProjPhaseID, parentID uint, number, costname, unit string, quantity, unitprice, total float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	var estimatecost *EstimateCostTemp
 	if estimateProjPhaseID == 0 && quantity == 0 && unitprice == 0 { // 2345级
@@ -351,7 +351,7 @@ func AddEstimateCostTemp(estimateProjPhaseID, parentID uint, number, costname, u
 
 // 查询所有项目
 func GetEstimateProjects(limit, offset int) (estimateProjects []EstimateProject, err error) {
-	db := _db
+	db := DB
 	err = db.Order("updated_at desc").
 		Preload("User").
 		Preload("EstimateProjPhase").
@@ -362,7 +362,7 @@ func GetEstimateProjects(limit, offset int) (estimateProjects []EstimateProject,
 
 // 查询所有项目
 func GetEstimateProjectsCount() (count int64, err error) {
-	db := _db
+	db := DB
 	err = db.Order("updated_at desc").
 		Count(&count).Error
 	return count, err
@@ -370,7 +370,7 @@ func GetEstimateProjectsCount() (count int64, err error) {
 
 // 查询建筑工程投资——经典的递归查询，无限极
 func GetEstimateCostArchi(estimateProjPhaseID uint, limit, offset int) (estimateCost []*EstimateCostArchi, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,parent_id,number,cost_name) as ( select id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select t.* from estimate_cost t,temp where temp.id = t.parent_id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	var q string
@@ -398,7 +398,7 @@ func GetEstimateCostArchi(estimateProjPhaseID uint, limit, offset int) (estimate
 // select * from cao where emperor_no is not null;
 // 查询机电设备安装工程投资
 func GetEstimateCostElect(estimateProjPhaseID uint, limit, offset int) (estimateCost []*EstimateCostElect, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,parent_id,number,cost_name) as ( select id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select t.* from estimate_cost t,temp where temp.id = t.parent_id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	var q string
@@ -417,7 +417,7 @@ func GetEstimateCostElect(estimateProjPhaseID uint, limit, offset int) (estimate
 
 // 查询金属结构安装工程投资
 func GetEstimateCostMetal(estimateProjPhaseID uint, limit, offset int) (estimateCost []*EstimateCostMetal, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,parent_id,number,cost_name) as ( select id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select t.* from estimate_cost t,temp where temp.id = t.parent_id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	var q string
@@ -436,7 +436,7 @@ func GetEstimateCostMetal(estimateProjPhaseID uint, limit, offset int) (estimate
 
 // 查询临时工程投资
 func GetEstimateCostTemp(estimateProjPhaseID uint, limit, offset int) (estimateCost []*EstimateCostTemp, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,parent_id,number,cost_name) as ( select id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select t.* from estimate_cost t,temp where temp.id = t.parent_id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Scan(&estimateCost).Error
 	var q string
@@ -455,7 +455,7 @@ func GetEstimateCostTemp(estimateProjPhaseID uint, limit, offset int) (estimateC
 
 // 查询建筑工程的投资数量
 func GetEstimateCostArchiCount(estimateProjPhaseID uint) (count int64, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Count(&count).Error
 	var q string
 	q = `
@@ -473,7 +473,7 @@ func GetEstimateCostArchiCount(estimateProjPhaseID uint) (count int64, err error
 
 // 查询机电设备安装工程的投资数量
 func GetEstimateCostElectCount(estimateProjPhaseID uint) (count int64, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Count(&count).Error
 	var q string
 	q = `
@@ -491,7 +491,7 @@ func GetEstimateCostElectCount(estimateProjPhaseID uint) (count int64, err error
 
 // 查询金属结构安装工程的投资数量
 func GetEstimateCostMetalCount(estimateProjPhaseID uint) (count int64, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Count(&count).Error
 	var q string
 	q = `
@@ -509,7 +509,7 @@ func GetEstimateCostMetalCount(estimateProjPhaseID uint) (count int64, err error
 
 // 查询临时工程的投资数量
 func GetEstimateCostTempCount(estimateProjPhaseID uint) (count int64, err error) {
-	db := _db
+	db := DB
 	// err = db.Raw("with RECURSIVE temp(id,estimate_proj_phase_id,parent_id,number,cost_name) as ( select id,estimate_proj_phase_id,parent_id,number,cost_name from estimate_cost where estimate_proj_phase_id = ? union all select estimate_cost.* from estimate_cost JOIN temp ON estimate_cost.parent_id = temp.id ) select * from temp", estimateProjPhaseID).Count(&count).Error
 	var q string
 	q = `
@@ -560,7 +560,7 @@ type EstimateTertiary struct {
 
 // 作废！一级专业部分（建筑工程）写入数据库
 func AddEstimateProfessional(estimateprojphaseid uint, component string, total float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	// var businesscheckin BusinessCheckin
 	estimateprofessional := &EstimateProfessional{
@@ -578,7 +578,7 @@ func AddEstimateProfessional(estimateprojphaseid uint, component string, total f
 
 // 作废！二级工程部分（一）写入数据库
 func AddEstimateSecondary(estimateprofessionalid uint, number, component string, total float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	// var businesscheckin BusinessCheckin
 	estimatesecondary := &EstimateSecondary{
@@ -597,7 +597,7 @@ func AddEstimateSecondary(estimateprofessionalid uint, number, component string,
 
 // 作废！三~五级工程部分（ (一) 1 (1) ）写入数据库
 func AddEstimateTertiary(estimatesecondaryid, parentid uint, number, component string, total float64) (id uint, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	//查询数据库中有无打卡
 	// var businesscheckin BusinessCheckin
 	estimatetertiary := &EstimateTertiary{

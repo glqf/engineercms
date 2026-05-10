@@ -1347,7 +1347,7 @@
       },
       proxyTable: {
         '/api':{//此处并非一定和url一致。
-          target:'https://zsj.itdos.com',
+          target:'https://www.zsj123.net',
           changeOrigin:true,//允许跨域
           pathRewrite:{
             '^/api': ''
@@ -1426,7 +1426,7 @@
           //   'Access-Control-Allow-Origin': '*'
           //   },//设置跨域请求头
           //   method: "GET",//请求方式
-          //   url: "https://zsj.itdos.com/v1/wx/getlistarticles",//请求地址
+          //   url: "https://www.zsj123.net/v1/wx/getlistarticles",//请求地址
           //   params:{
           //       page:1
           //   }

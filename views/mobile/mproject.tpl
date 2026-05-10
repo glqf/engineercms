@@ -623,7 +623,6 @@
           lazyLoad: loaddata,
         });
 
-
         $('#tree').on('nodeSelected', function(event, data) {
           document.getElementById("iframepage").src = "/project/{{.Id}}/" + data.id;
           projid = data.id

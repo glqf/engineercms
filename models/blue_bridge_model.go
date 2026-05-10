@@ -54,7 +54,7 @@ type WherePair struct {
 // orm.RegisterModelWithPrefix("share_", new(Bridge))
 // }
 
-//pager
+// pager
 type Pager struct {
 	Page       int         `json:"page"`
 	PageSize   int         `json:"pageSize"`
@@ -129,7 +129,7 @@ type Pager struct {
 // }
 
 func CreateBridge(bridge *Bridge) (*Bridge, error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	timeUUID, _ := uuid.NewV4()
 	bridge.Uuid = string(timeUUID.String())
 	bridge.CreatedAt = time.Now()
@@ -173,7 +173,7 @@ func FindByShareUuid(shareUuid string) ([]*Bridge, error) {
 	}
 	var bridges []*Bridge
 	// db := GetDB()
-	db := _db.Table("share_bridge").
+	db := DB.Table("share_bridge").
 		Where("share_uuid = ?", shareUuid).
 		Find(&bridges)
 	// this.PanicError(db.Error)

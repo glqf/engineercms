@@ -110,7 +110,7 @@ type Recharge struct {
 
 /*20201008这些都应该放到models文件夹里第一个文件里，这样，程序初始化的时候先定义这些全局变量……*/
 //定义全局的db对象，我们执行数据库操作主要通过他实现。
-// var _db *gorm.DB
+// var DB *gorm.DB
 
 func init() {
 	// var err error
@@ -122,10 +122,10 @@ func init() {
 	// 	db_path = "./"
 	// }
 	// dns = fmt.Sprintf("%s%s.db", db_path, db_name)
-	// _db, err = gorm.Open(db_type, dns)
+	// DB, err = gorm.Open(db_type, dns)
 
-	// defer _db.Close()//20200803这个不能打开。
-	// _db.LogMode(true)
+	// defer DB.Close()//20200803这个不能打开。
+	// DB.LogMode(true)
 
 	// if err != nil {
 	// 	panic("连接数据库失败, error=" + err.Error())
@@ -134,22 +134,22 @@ func init() {
 	// defer gdb.Close()
 	//禁止表名复数形式
 
-	// _db.SingularTable(true)
+	// DB.SingularTable(true)
 
 	// 开发的时候需要打开调试日志
-	// _db.LogMode(true)
+	// DB.LogMode(true)
 	//设置数据库连接池参数
 
-	// _db.DB().SetMaxOpenConns(100) //设置数据库连接池最大连接数
-	// _db.DB().SetMaxIdleConns(20)  //连接池最大允许的空闲连接数，如果没有sql任务需要执行的连接数大于20，超过的连接会被连接池关闭。
-	// _db.AutoMigrate(&Pay{}, &Money{}, &Recharge{}, &PayMath{}, &PayMathPdf{}, &PayExcel{}, &PayExcelPdf{})
-	// _db.CreateTable(&Pay{}, &Money{}, &Recharge{}) //当第一个存在时，后面的不再建立，bug！！！
-	// _db.CreateTable(&Money{})
-	// _db.CreateTable(&Recharge{})
-	// _db.CreateTable(&PayMath{})
-	// _db.CreateTable(&PayMathPdf{})
-	// _db.CreateTable(&PayExcel{})
-	// _db.CreateTable(&PayExcelPdf{})
+	// DB.DB().SetMaxOpenConns(100) //设置数据库连接池最大连接数
+	// DB.DB().SetMaxIdleConns(20)  //连接池最大允许的空闲连接数，如果没有sql任务需要执行的连接数大于20，超过的连接会被连接池关闭。
+	// DB.AutoMigrate(&Pay{}, &Money{}, &Recharge{}, &PayMath{}, &PayMathPdf{}, &PayExcel{}, &PayExcelPdf{})
+	// DB.CreateTable(&Pay{}, &Money{}, &Recharge{}) //当第一个存在时，后面的不再建立，bug！！！
+	// DB.CreateTable(&Money{})
+	// DB.CreateTable(&Recharge{})
+	// DB.CreateTable(&PayMath{})
+	// DB.CreateTable(&PayMathPdf{})
+	// DB.CreateTable(&PayExcel{})
+	// DB.CreateTable(&PayExcelPdf{})
 	// if !gdb.HasTable(&Pay1{}) {
 	// 	if err = gdb.CreateTable(&Pay1{}).Error; err != nil {
 	// 		panic(err)
@@ -157,19 +157,19 @@ func init() {
 	// }
 }
 
-//获取gorm db对象，其他包需要执行数据库查询的时候，只要通过tools._db//GetDB()获取db对象即可。
+//获取gorm db对象，其他包需要执行数据库查询的时候，只要通过tools.DB//GetDB()获取db对象即可。
 //不用担心协程并发使用同样的db对象会共用同一个连接，
 // db对象在调用他的方法的时候会从数据库连接池中获取新的连接
 // 注意：使用连接池技术后，千万不要使用完db后调用db.Close关闭数据库连接，
 // 这样会导致整个数据库连接池关闭，导致连接池没有可用的连接
-// func _db//GetDB() *gorm.DB {
-// 	return _db
+// func DB//GetDB() *gorm.DB {
+// 	return DB
 // }
 
 // 查询某个打赏记录
 func GetPay(id int64) (pay Pay, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	db.Find(&pay, 1)
 	db.Model(&pay).Find(&pay)
 	// err = db.Model(&pay).Related(&pay.User, "User").Error
@@ -187,7 +187,7 @@ func GetPay(id int64) (pay Pay, err error) {
 // 查询某个用户账户余额
 func GetUserMoney(uid int64) (money Money, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Where("user_id = ?", uid).First(&money).Error
 	return money, err
 }
@@ -195,7 +195,7 @@ func GetUserMoney(uid int64) (money Money, err error) {
 // 添加某个文章某个用户打赏记录
 func AddUserPay(articleid, uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -352,7 +352,7 @@ func AddUserPay(articleid, uid int64, amount int) error {
 // 添加某个math某个用户计算扣费记录
 func AddUserPayMath(templeid uint, uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -461,7 +461,7 @@ func AddUserPayMath(templeid uint, uid int64, amount int) error {
 // 添加某个mathpdf某个用户计算扣费记录,归平台所有
 func AddUserPayMathPdf(pdftitle, pdflink string, uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -511,7 +511,7 @@ func AddUserPayMathPdf(pdftitle, pdflink string, uid int64, amount int) error {
 // 查询某个用户下载过的pdf记录
 func GetUserPayMathPdf(uid int64, pdftitle string) (paymathpdf PayMathPdf, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Where("user_id = ? AND pdf_title=?", uid, pdftitle).First(&paymathpdf).Error
 	return paymathpdf, err
 }
@@ -519,7 +519,7 @@ func GetUserPayMathPdf(uid int64, pdftitle string) (paymathpdf PayMathPdf, err e
 // 添加某个math某个用户计算扣费记录
 func AddUserPayExcel(templeid uint, uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -628,7 +628,7 @@ func AddUserPayExcel(templeid uint, uid int64, amount int) error {
 // 添加某个mathpdf某个用户计算扣费记录,归平台所有
 func AddUserPayExcelPdf(pdftitle, pdflink string, uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -678,7 +678,7 @@ func AddUserPayExcelPdf(pdftitle, pdflink string, uid int64, amount int) error {
 // 查询某个用户下载过的pdf记录
 func GetUserPayExcelPdf(uid int64, pdftitle string) (payexcelpdf PayExcelPdf, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Where("user_id = ? AND pdf_title=?", uid, pdftitle).First(&payexcelpdf).Error
 	return payexcelpdf, err
 }
@@ -686,7 +686,7 @@ func GetUserPayExcelPdf(uid int64, pdftitle string) (payexcelpdf PayExcelPdf, er
 // 用户充值和提现
 func AddUserRecharge(uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -772,7 +772,7 @@ func AddUserRecharge(uid int64, amount int) error {
 // 用户添加充值申请——软删除db.Delete(&User{}, 10)，采用事务，如果软删除出错，则回滚
 func AddApplyRecharge(uid int64, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -806,7 +806,7 @@ func AddApplyRecharge(uid int64, amount int) error {
 // 管理员查询到所有申请
 func GetApplyRecharge(limit, offset int) (recharge []Recharge, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if err := db.Unscoped().Preload("User").Where("deleted_at <> ?", "").Limit(limit).Offset(offset).Find(&recharge).Error; err != nil {
 		return recharge, err
 	}
@@ -817,7 +817,7 @@ func GetApplyRecharge(limit, offset int) (recharge []Recharge, err error) {
 // db.Model(&user).Select("Name", "Age").Updates(User{Name: "new_name", Age: 0})
 func UpdateRecharge(rid uint, amount int) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// 注意，当你在一个事务中应使用 tx 作为数据库句柄
 	tx := db.Begin()
 	defer func() {
@@ -864,7 +864,7 @@ func UpdateRecharge(rid uint, amount int) error {
 // 查询某个用户花费赞赏 和 获得 文章 赞赏记录
 func GetUserPay(uid int64, limit, offset int) (pays []*Pay, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// err = db.Where("user_id", uid).Find(&pays).Error
 	err = db.Order("updated_at desc").Model(&pays).Preload("User").Preload("Article").Where("user_id = ?", uid).Or("temple_user = ?", uid).Limit(limit).Offset(offset).Find(&pays).Error //查询所有device记录
 	// err = db.Model(&pays).Related(&pays.User, "Users").Error
@@ -876,7 +876,7 @@ func GetUserPay(uid int64, limit, offset int) (pays []*Pay, err error) {
 // 查询某个用户花费赞赏 和 获得 math 赞赏记录
 func GetUserPayMath(uid int64, limit, offset int) (paymaths []*PayMath, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// err = db.Where("user_id", uid).Find(&pays).Error
 	err = db.Order("updated_at desc").Preload("User").Preload("User2").Preload("MathTemple").Where("user_id = ?", uid).Or("temple_user = ?", uid).Limit(limit).Offset(offset).Find(&paymaths).Error //查询所有device记录
 	// err = db.Model(&pays).Related(&pays.User, "Users").Error
@@ -888,7 +888,7 @@ func GetUserPayMath(uid int64, limit, offset int) (paymaths []*PayMath, err erro
 // 查询某个用户 花费 赞赏（赞赏别人）文章 的记录
 func GetUserPayAppreciation(uid int64, limit, offset int) (pays []*Pay, err error) {
 	//获取DB
-	db := _db                                                                                                                                               //GetDB()
+	db := DB                                                                                                                                                //GetDB()
 	err = db.Order("updated_at desc").Model(&pays).Preload("User").Preload("Article").Where("user_id=?", uid).Limit(limit).Offset(offset).Find(&pays).Error //查询所有device记录
 	return pays, err
 	// 多连接及参数
@@ -898,7 +898,7 @@ func GetUserPayAppreciation(uid int64, limit, offset int) (pays []*Pay, err erro
 // 查询某个用户 花费 赞赏（赞赏别人）math 的记录
 func GetUserPayMathAppreciation(uid int64, limit, offset int) (paymaths []*PayMath, err error) {
 	//获取DB
-	db := _db                                                                                                                                                          //GetDB()
+	db := DB                                                                                                                                                           //GetDB()
 	err = db.Order("updated_at desc").Model(&paymaths).Preload("User").Preload("MathTemple").Where("user_id=?", uid).Limit(limit).Offset(offset).Find(&paymaths).Error //查询所有device记录
 	return paymaths, err
 	// 多连接及参数
@@ -908,7 +908,7 @@ func GetUserPayMathAppreciation(uid int64, limit, offset int) (paymaths []*PayMa
 // 查询某个用户 获得 赞赏（别人赞赏自己）的记录
 func GetUserGetAppreciation(uid int64, limit, offset int) (pays []*Pay, err error) {
 	//获取DB
-	db := _db                                                                                                                                                   //GetDB()
+	db := DB                                                                                                                                                    //GetDB()
 	err = db.Order("updated_at desc").Model(&pays).Preload("User").Preload("Article").Where("temple_user=?", uid).Limit(limit).Offset(offset).Find(&pays).Error //查询所有device记录
 	return pays, err
 	// 多连接及参数
@@ -918,7 +918,7 @@ func GetUserGetAppreciation(uid int64, limit, offset int) (pays []*Pay, err erro
 // 查询某个用户 获得 赞赏（别人赞赏自己）math 的记录
 func GetUserGetMathAppreciation(uid int64, limit, offset int) (paymaths []*PayMath, err error) {
 	//获取DB
-	db := _db                                                                                                                                                              //GetDB()
+	db := DB                                                                                                                                                               //GetDB()
 	err = db.Order("updated_at desc").Model(&paymaths).Preload("User").Preload("MathTemple").Where("temple_user=?", uid).Limit(limit).Offset(offset).Find(&paymaths).Error //查询所有device记录
 	return paymaths, err
 	// 多连接及参数

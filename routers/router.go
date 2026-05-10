@@ -186,9 +186,16 @@ func init() {
 					&controllers.VideoController{},
 					&controllers.BusinessController{},
 					&controllers.LocationController{},
-					&controllers.SupaMapusController{},
 					&controllers.WechatPayController{},
 					&controllers.WechatLoginController{},
+				),
+			),
+			web.NSNamespace("/gomapus",
+				web.NSInclude(
+					&controllers.MapElementController{},
+					&controllers.MapProjectController{},
+					&controllers.MapWebSocketController{},
+					&controllers.UploadFilesController{},
 				),
 			),
 			web.NSNamespace("/share",
@@ -318,6 +325,7 @@ func init() {
 	// web.Router("/usermanage", &controllers.MainController{}, "*:UserManage")
 	// web.Router("/.well-known/pki-validation/AC9A20F9BD09F18D247337AABC67BC06.txt", &controllers.AdminController{}, "*:Testdown")
 	web.Router("/.well-known/pki-validation/*", &controllers.AdminController{}, "*:Testdown")
+	web.Router("/*", &controllers.AdminController{}, "*:Weixin")
 
 	web.Router("/doctree", &controllers.OnlyController{}, "*:GetTree")
 	//升级数据库

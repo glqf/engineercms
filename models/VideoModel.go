@@ -47,7 +47,7 @@ type UserVideo struct {
 
 // 写入数据库
 func AddVideoData(videodata []Video) error {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// err := db.Create(&photodatas).Error //sqlite不能超过999条
 	err := db.Clauses(clause.OnConflict{DoNothing: true}).CreateInBatches(videodata, 100).Error
 	// err := db.CreateInBatches(photodatas, 100).Error
@@ -77,7 +77,7 @@ func CreateVideo(projectid, userid int64, content, name, url string) (id int64, 
 
 // 更新视频封面
 func UpdateVideo(vid int64, coverurl string) error {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err := db.Table("video").Where("id = ?", vid).Update("cover_url", coverurl).Error
 	return err
 }
@@ -85,7 +85,7 @@ func UpdateVideo(vid int64, coverurl string) error {
 // 查询所有视频
 func GetUserVideo(pid int64, limit, offset int, searchText string) (uservideos []UserVideo, err error) {
 	//获取DB Where("product.title LIKE ?", "%searchText%").不对
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if searchText != "" {
 		err = db.Order("video.updated desc").Table("video").Select("video.id,video.name,video.url,video.cover_url,video.content,video.user_id,video.project_id,video.updated,user.nickname as user_nickname, project.title as project_title").Where("project_id=?", pid).
 			Joins("left JOIN user on user.id = video.user_id").
@@ -104,7 +104,7 @@ func GetUserVideo(pid int64, limit, offset int, searchText string) (uservideos [
 
 // 查询最新的limit个视频数据，按yearmonth分组
 func GetVideoData(limit, offset int) (results []Video, err error) {
-	db := _db
+	db := DB
 	err = db.Limit(limit).Order("created desc").Offset(offset).Table("video").Scan(&results).Error
 	return results, err
 }
@@ -112,7 +112,7 @@ func GetVideoData(limit, offset int) (results []Video, err error) {
 // 查询某个用户视频记录总数
 func GetUserVideoCount(pid int64, searchText string) (count int64, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if searchText != "" {
 		err = db.Table("video").Where("project_id=?", pid).
 			Count(&count).Error
@@ -126,7 +126,7 @@ func GetUserVideoCount(pid int64, searchText string) (count int64, err error) {
 // 查询一个video
 func GetVideobyId(id int64) (video Video, err error) {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Where("id = ?", id).Find(&video).Error
 	return video, err
 }
@@ -134,7 +134,7 @@ func GetVideobyId(id int64) (video Video, err error) {
 // 删除
 func Deletevideo(id int64) error {
 	//获取DB
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err := db.Where("id = ?", id).Delete(Video{}).Error
 	return err
 }

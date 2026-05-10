@@ -138,7 +138,7 @@
         </ul>
       </div>
       <div class="btn-group">
-        <a href="https://zsj.itdos.net/docs/pss" target="_blank" type="button"><i class="fa fa-question-circle-o">&nbsp;&nbsp;帮助</i></a>
+        <a href="https://www.zsj123.net/docs/pss" target="_blank" type="button"><i class="fa fa-question-circle-o">&nbsp;&nbsp;帮助</i></a>
       </div>
       <div class="btn-group">
         <a href="/wiki" target="_blank" type="button"><i class="fa fa-envelope-o">&nbsp;&nbsp;留言</i></a>

@@ -13,18 +13,18 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/PuerkitoBio/goquery"
-	"github.com/beego/beego/v2/client/orm"
-	"github.com/beego/beego/v2/core/logs"
-	"github.com/beego/beego/v2/server/web"
-	"github.com/beego/i18n"
 	"github.com/3xxx/engineercms/conf"
-	"github.com/3xxx/engineercms/converter"
 	"github.com/3xxx/engineercms/controllers/utils/cryptil"
 	"github.com/3xxx/engineercms/controllers/utils/filetil"
 	"github.com/3xxx/engineercms/controllers/utils/gopool"
 	"github.com/3xxx/engineercms/controllers/utils/requests"
 	"github.com/3xxx/engineercms/controllers/utils/ziptil"
+	"github.com/3xxx/engineercms/converter"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/logs"
+	"github.com/beego/beego/v2/server/web"
+	"github.com/beego/i18n"
 	"github.com/russross/blackfriday/v2"
 )
 
@@ -276,7 +276,7 @@ func BackgroundConvert(sessionId string, bookResult *BookResult) error {
 	return nil
 }
 
-//导出PDF、word等格式
+// 导出PDF、word等格式
 func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 
 	convertBookResult := ConvertBookResult{}
@@ -353,7 +353,7 @@ func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 		Cover:        m.Cover,
 		Timestamp:    time.Now().Format("2006-01-02 15:04:05"),
 		Description:  string(blackfriday.Run([]byte(m.Description))),
-		Footer:       "<p style='color:#8E8E8E;font-size:12px;'>本文档使用 <a href='https://www.iminho.me' style='text-decoration:none;color:#1abc9c;font-weight:bold;'>MinDoc</a> 构建 <span style='float:right'>- _PAGENUM_ -</span></p>",
+		Footer:       "<p style='color:#8E8E8E;font-size:12px;'>本文档使用 <a href='https://doc.gsw945.com/docs/mindoc-docs' style='text-decoration:none;color:#1abc9c;font-weight:bold;'>MinDoc</a> 构建 <span style='float:right'>- _PAGENUM_ -</span></p>",
 		Header:       "<p style='color:#8E8E8E;font-size:12px;'>_SECTION_</p>",
 		Identifier:   "",
 		Language:     "zh-CN",
@@ -465,24 +465,24 @@ func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 		f.Close()
 	}
 
-	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static", "css", "kancloud.css"), filepath.Join(tempOutputPath, "styles", "css", "kancloud.css")); err != nil {
+	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static/mindoc", "css", "kancloud.css"), filepath.Join(tempOutputPath, "styles", "css", "kancloud.css")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/css/kancloud.css", err)
 	}
-	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static", "css", "export.css"), filepath.Join(tempOutputPath, "styles", "css", "export.css")); err != nil {
+	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static/mindoc", "css", "export.css"), filepath.Join(tempOutputPath, "styles", "css", "export.css")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/css/export.css", err)
 	}
-	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static", "editor.md", "css", "editormd.preview.css"), filepath.Join(tempOutputPath, "styles", "editor.md", "css", "editormd.preview.css")); err != nil {
+	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static/mindoc", "editor.md", "css", "editormd.preview.css"), filepath.Join(tempOutputPath, "styles", "editor.md", "css", "editormd.preview.css")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/editor.md/css/editormd.preview.css", err)
 	}
 
-	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static", "css", "markdown.preview.css"), filepath.Join(tempOutputPath, "styles", "css", "markdown.preview.css")); err != nil {
+	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static/mindoc", "css", "markdown.preview.css"), filepath.Join(tempOutputPath, "styles", "css", "markdown.preview.css")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/css/markdown.preview.css", err)
 	}
-	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static", "editor.md", "lib", "highlight", "styles", "github.css"), filepath.Join(tempOutputPath, "styles", "css", "github.css")); err != nil {
+	if err := filetil.CopyFile(filepath.Join(conf.WorkingDirectory, "static/mindoc", "editor.md", "lib", "highlight", "styles", "github.css"), filepath.Join(tempOutputPath, "styles", "css", "github.css")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/editor.md/lib/highlight/styles/github.css", err)
 	}
 
-	if err := filetil.CopyDir(filepath.Join(conf.WorkingDirectory, "static", "font-awesome"), filepath.Join(tempOutputPath, "styles", "font-awesome")); err != nil {
+	if err := filetil.CopyDir(filepath.Join(conf.WorkingDirectory, "static/mindoc", "font-awesome"), filepath.Join(tempOutputPath, "styles", "font-awesome")); err != nil {
 		logs.Error("复制CSS样式出错 -> static/font-awesome", err)
 	}
 
@@ -523,7 +523,7 @@ func (m *BookResult) Converter(sessionId string) (ConvertBookResult, error) {
 	return convertBookResult, nil
 }
 
-//导出Markdown原始文件
+// 导出Markdown原始文件
 func (m *BookResult) ExportMarkdown(sessionId string) (string, error) {
 	outputPath := filepath.Join(conf.WorkingDirectory, "uploads", "books", strconv.Itoa(m.BookId), "book.zip")
 
@@ -548,7 +548,7 @@ func (m *BookResult) ExportMarkdown(sessionId string) (string, error) {
 	return outputPath, nil
 }
 
-//递归导出Markdown文档
+// 递归导出Markdown文档
 func exportMarkdown(p string, parentId int, bookId int, baseDir string, bookUrl string) error {
 	o := orm.NewOrm()
 
@@ -711,7 +711,7 @@ func recursiveJoinDocumentIdentify(parentDocId int, identify string) string {
 	return identify
 }
 
-//查询项目的第一篇文档
+// 查询项目的第一篇文档
 func (m *BookResult) FindFirstDocumentByBookId(bookId int) (*Document, error) {
 
 	o := orm.NewOrm()

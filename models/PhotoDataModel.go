@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-//用户-模板表
+// 用户-模板表
 type PhotoData struct {
 	gorm.Model
 	YearMonth    string
@@ -18,7 +18,7 @@ type PhotoData struct {
 
 // 写入数据库
 func AddPhotoData(photodatas []PhotoData) error {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	// err := db.Create(&photodatas).Error //sqlite不能超过999条
 	err := db.Clauses(clause.OnConflict{DoNothing: true}).CreateInBatches(photodatas, 100).Error
 	// err := db.CreateInBatches(photodatas, 100).Error
@@ -34,14 +34,14 @@ func AddPhotoData(photodatas []PhotoData) error {
 
 // 查询最新的limit个按天分组的照片数据，按yearmonth分组
 func GetPhotoData(limit, offset int) (results []PhotoData, err error) {
-	db := _db
+	db := DB
 	err = db.Limit(limit).Order("created_at desc").Offset(offset).Table("photo_data").Group("year_month_day").Scan(&results).Error
 	return results, err
 }
 
 // 按yearmonthday查询所有照片
 func GetDayPhotoData(yearmonthday string, limit, offset int) (results []PhotoData, err error) {
-	db := _db
+	db := DB
 	err = db.Limit(limit).Offset(offset).Table("photo_data").Where("year_month_day = ?", yearmonthday).Scan(&results).Error
 	return results, err
 }
@@ -52,14 +52,14 @@ func GetDayPhotoData(yearmonthday string, limit, offset int) (results []PhotoDat
 // DATE_FORMAT(time,'%Y-%m-%d')
 // date(created_at) > ?
 func GetPrevPhotoData(createdat time.Time) (results []PhotoData, err error) {
-	db := _db
+	db := DB
 	err = db.Limit(1).Offset(0).Order("created_at desc").Table("photo_data").Where("created_at < ?", createdat).Scan(&results).Error
 	return results, err
 }
 
 // 查找后一天的照片,升序排列
 func GetNextPhotoData(createdat time.Time) (results []PhotoData, err error) {
-	db := _db
+	db := DB
 	err = db.Limit(1).Offset(0).Order("created_at asc").Table("photo_data").Where("created_at > ?", createdat).Scan(&results).Error
 	return results, err
 }

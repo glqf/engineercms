@@ -60,7 +60,7 @@ func (c *WechatLoginController) WxLoginQrcode() {
 	}
 
 	state := util.RandomString(10) //防止跨站请求伪造攻击 增加安全性
-	path := "https://zsj.itdos.net/v1/wx/redirecturi"
+	path := "https://www.zsj123.net/v1/wx/redirecturi"
 	redirectURL := url.QueryEscape(path) //get userinfo,授权后重定向的回调链接地址， 请使用 urlEncode 对链接进行处理
 	requestUrl := "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + APPID + "&redirect_uri=" + redirectURL + "&response_type=code&state=" + state + "&scope=snsapi_userinfo#wechat_redirect"
 

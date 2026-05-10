@@ -140,7 +140,7 @@ func AddProject(code, title, principal string, parentid int64, parentidpath, par
 }
 
 func AddProjectUser(pid, uid int64) (id int64, err error) {
-	db := _db
+	db := DB
 	logs.Info(db)
 	projectuser := ProjectUser{ProjectId: pid, UserId: uid}
 
@@ -153,7 +153,7 @@ func AddProjectUser(pid, uid int64) (id int64, err error) {
 }
 
 func AddProjectDescription(pid int64, description string) (id int64, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	projectdescription := ProjectDescription{ProjectId: pid, Description: description}
 
 	result := db.Create(&projectdescription) // 通过数据的指针来创建
@@ -165,7 +165,7 @@ func AddProjectDescription(pid int64, description string) (id int64, err error) 
 }
 
 func AddProjectLabel(pid int64, label string) (id int64, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	projectlabel := ProjectLabel{ProjectId: pid, Label: label}
 
 	result := db.Create(&projectlabel) // 通过数据的指针来创建
@@ -269,7 +269,7 @@ type UserProject struct {
 // Or("principal LIKE ?", "%"+searchText+"%"))).
 
 func GetProjectsPage(limit, offset int, searchText string) (project []*UserProject, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	if searchText != "" {
 		err = db.Order("project.created desc").Table("project").
 			Select("project.id as id,project.code as code,project.title as title,project.created as created,user.nickname as principal,project_label.label as label").
@@ -294,7 +294,7 @@ func GetProjectsPage(limit, offset int, searchText string) (project []*UserProje
 }
 
 func GetProjectUser(pid int64) (user User, err error) {
-	db := _db //GetDB()
+	db := DB //GetDB()
 	err = db.Table("project").Select("project_user.user_id as id").
 		Where("project.id=?", pid).
 		Joins("left JOIN project_user on project.id = project_user.project_id").

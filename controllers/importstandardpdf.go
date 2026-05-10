@@ -1,3 +1,4 @@
+// 接收远程请求，将指定文件夹下的pdf导入standard数据表，以及建立全文检索
 package controllers
 
 import (
@@ -55,6 +56,15 @@ type ScanResponse struct {
 // @Success 200 {object} controllers.ScanResponse
 // @router /scan [post]
 func (c *ImportStandardController) Scan() {
+	// _, _, _, isadmin, _ := checkprodRole(c.Ctx)
+	// if !isadmin {
+	// 	c.Data["json"] = ScanResponse{
+	// 		Success: false,
+	// 		Message: fmt.Sprintf("非管理员！"),
+	// 	}
+	// 	c.ServeJSON()
+	// 	return
+	// }
 	var req ScanRequest
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &req); err != nil {
 		c.Data["json"] = ScanResponse{

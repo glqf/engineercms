@@ -2226,7 +2226,7 @@ h3 .share-icon {
         // $(".modal-body").append(th1); //这里是否要换名字$("p").remove();
         document.getElementById("sharetitle").innerText = data.data.name;
         document.getElementById("username").innerText = data.data.username;
-        // document.getElementById("uuid").innerText='https://zsj.itdos.com/share/detail/'+data.data.uuid;
+        // document.getElementById("uuid").innerText='https://www.zsj123.net/share/detail/'+data.data.uuid;
         // document.getElementById("uuid").append('<a title="复制链接" class="mr15"><i class="fa fa-copy"></i></a>');
         document.getElementById("uuid").innerHTML = '<span id="copyuuid">' + {{.Site }} + '/v1/share/detail/' + data.data.uuid + '</span><a title="复制链接" class="mr15" data-clipboard-target="#copyuuid"><i class="fa fa-copy"></i></a>'
         document.getElementById("code").innerHTML = '<span id="copycode">' + data.data.code + '</span><a title="复制提取码" class="mr15" data-clipboard-target="#copycode"><i class="fa fa-copy"></i></a>';

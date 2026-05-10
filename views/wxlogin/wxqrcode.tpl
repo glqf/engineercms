@@ -21,7 +21,7 @@ var obj = new WxLogin({
   id: "login_container",
   appid: "*******",
   scope: "snsapi_login",
-  redirect_uri: encodeURIComponent("https://zsj.itdos.net/v1/wx/redirecturi"),
+  redirect_uri: encodeURIComponent("https://www.zsj123.net/v1/wx/redirecturi"),
   state: state,
   style: "white",
   href: "data:text/css;base64,LmxvZ2luUGFuZWwubm9ybWFsUGFuZWwgLnRpdGxlIHsNCiAgZGlzcGxheTogbm9uZTsNCn0NCi5xcmNvZGUubGlnaHRCb3JkZXIgew0KICB3aWR0aDogMTc0cHg7DQogIGhlaWdodDogMTc0cHg7DQogIG1hcmdpbi10b3A6IDA7DQogIGJveC1zaXppbmc6IGJvcmRlci1ib3g7DQp9DQouaW1wb3dlckJveCAuaW5mbyB7DQogIGRpc3BsYXk6IG5vbmU7DQp9DQoud2ViX3FyY29kZV90eXBlX2lmcmFtZSB7DQogIHdpZHRoOiAxNzRweDsNCn0NCg=="

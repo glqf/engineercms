@@ -26,7 +26,7 @@ import (
 var engine *xorm.Engine
 
 // 定义全局的db对象，我们执行数据库操作主要通过他实现。
-var _db *gorm.DB
+var DB *gorm.DB
 
 type AdminCategory struct {
 	Id       int64     `form:"-"`
@@ -151,9 +151,9 @@ func init() {
 	}
 
 	// 2.注册gorm
-	// _db, err = gorm.Open(db_type, dns)
+	// DB, err = gorm.Open(db_type, dns)
 	// 20220102下面这里用了:=导致全局变量一致无法用！！
-	_db, err = gorm.Open(sqlite.Open(dns), &gorm.Config{
+	DB, err = gorm.Open(sqlite.Open(dns), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent), //gorm查询静默模式。在conf里设置的，以及main.go里设置的，仅仅针对beego的orm有效
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // 使用单数表名，启用该选项后，`User` 表将是`user`
@@ -163,16 +163,16 @@ func init() {
 		},
 	})
 
-	// defer _db.Close()//20200803这个不能打开。
+	// defer DB.Close()//20200803这个不能打开。
 	// db.LogMode(false)
 	if err != nil {
 		panic("连接数据库失败, error=" + err.Error())
 	}
 
 	// 开发的时候需要打开调试日志
-	// _db.LogMode(true)
+	// DB.LogMode(true)
 
-	sqlDB, err := _db.DB()
+	sqlDB, err := DB.DB()
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量，如果没有sql任务需要执行的连接数大于20，超过的连接会被连接池关闭。
 	sqlDB.SetMaxIdleConns(10)
 	// SetMaxOpenConns 设置打开数据库连接的最大数量。
@@ -214,29 +214,31 @@ func init() {
 
 	// gorm表迁移，不是自动建表，也不会更新表字段！
 	// 对于写在一行李的，当第一个存在后，后面的不建立！！！
-	_db.AutoMigrate(&Article{}, &Location{}, &LocationNavigate{})
-	_db.AutoMigrate(&BusinessCheckin{})
-	_db.AutoMigrate(&BusinessUser{})
-	_db.AutoMigrate(&Business{})
-	_db.AutoMigrate(&AnsysApdl{}, &AnsysInputs{}, &AnsysOutputs{}, &AnsysHistory{}, &AnsysHistoryInputValue{}, &AnsysHistoryOutputValue{}, &AnsysArticle{})
-	_db.AutoMigrate(&ExcelTemple{}, &ExcelInputs{}, &ExcelOutputs{}, &ExcelHistory{}, &ExcelHistoryInputValue{}, &ExcelHistoryOutputValue{}, &ExcelArticle{})
-	_db.AutoMigrate(&MathTemple{})
-	_db.AutoMigrate(&MathInputs{})
-	_db.AutoMigrate(&MathOutputs{})
-	_db.AutoMigrate(&MathHistory{})
-	_db.AutoMigrate(&MathHistoryInputValue{})
-	_db.AutoMigrate(&MathHistoryOutputValue{})
-	_db.AutoMigrate(&MathArticle{})
-	_db.AutoMigrate(&Pay{}, &Money{}, &Recharge{}, &PayMath{}, &PayMathPdf{}, &PayExcel{}, &PayExcelPdf{})
-	// _db.AutoMigrate(&WxPayMathCAD{}, &WxPayExcel{})
-	_db.AutoMigrate(&PassProject{})
+	DB.AutoMigrate(&Article{}, &Location{}, &LocationNavigate{})
+	DB.AutoMigrate(&BusinessCheckin{})
+	DB.AutoMigrate(&BusinessUser{})
+	DB.AutoMigrate(&Business{})
+	DB.AutoMigrate(&AnsysApdl{}, &AnsysInputs{}, &AnsysOutputs{}, &AnsysHistory{}, &AnsysHistoryInputValue{}, &AnsysHistoryOutputValue{}, &AnsysArticle{})
+	DB.AutoMigrate(&ExcelTemple{}, &ExcelInputs{}, &ExcelOutputs{}, &ExcelHistory{}, &ExcelHistoryInputValue{}, &ExcelHistoryOutputValue{}, &ExcelArticle{})
+	DB.AutoMigrate(&MathTemple{})
+	DB.AutoMigrate(&MathInputs{})
+	DB.AutoMigrate(&MathOutputs{})
+	DB.AutoMigrate(&MathHistory{})
+	DB.AutoMigrate(&MathHistoryInputValue{})
+	DB.AutoMigrate(&MathHistoryOutputValue{})
+	DB.AutoMigrate(&MathArticle{})
+	DB.AutoMigrate(&Pay{}, &Money{}, &Recharge{}, &PayMath{}, &PayMathPdf{}, &PayExcel{}, &PayExcelPdf{})
+	// DB.AutoMigrate(&WxPayMathCAD{}, &WxPayExcel{})
+	DB.AutoMigrate(&PassProject{})
 
-	_db.AutoMigrate(&PhotoData{})
+	DB.AutoMigrate(&PhotoData{})
 
-	_db.AutoMigrate(&EstimateProjPhase{})
-	_db.AutoMigrate(&EstimateProject{})
+	DB.AutoMigrate(&EstimateProjPhase{})
+	DB.AutoMigrate(&EstimateProject{})
 	// &EstimateProfessional{}, &EstimateSecondary{}, &EstimateTertiary{},
-	_db.AutoMigrate(&EstimateCostArchi{}, &EstimateCostElect{}, &EstimateCostMetal{}, &EstimateCostTemp{})
+	DB.AutoMigrate(&EstimateCostArchi{}, &EstimateCostElect{}, &EstimateCostMetal{}, &EstimateCostTemp{})
+	// 地图协作
+	DB.AutoMigrate(&MapProject{}, &MapProjectMember{}, &MapElement{}, &MapUploadedFile{})
 }
 
 //获取gorm db对象，其他包需要执行数据库查询的时候，只要通过tools.getDB()获取db对象即可。
@@ -244,12 +246,12 @@ func init() {
 // db对象在调用他的方法的时候会从数据库连接池中获取新的连接
 // 注意：使用连接池技术后，千万不要使用完db后调用db.Close关闭数据库连接，
 // 这样会导致整个数据库连接池关闭，导致连接池没有可用的连接
-// 不需要getdb，只要全局变量_db即可。但是每次使用，是否要给_db重新赋一个新的变量？？？比如db:=_db???会互相影响吗
+// 不需要getdb，只要全局变量DB即可。但是每次使用，是否要给DB重新赋一个新的变量？？？比如db:=DB???会互相影响吗
 // func GetDB() *gorm.DB {
-// 	return _db
+// 	return DB
 // }
 // func GetDB(ctx context.Context) *gorm.DB {
-// 	return _db.WithContext(ctx)
+// 	return DB.WithContext(ctx)
 // }
 
 // 创建数据库_来自github.com/beego/admin——这个仅作为参考用，没有使用
